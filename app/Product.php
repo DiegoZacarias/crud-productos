@@ -24,7 +24,7 @@ class Product extends Model
     
      public function getGetExcerptImgAttribute()
     {
-        return substr($this->image,0,3);  //para que muestre los primeros 50 caracteres del post
+        return substr($this->image,0,3);  
     }
 
     public function images()

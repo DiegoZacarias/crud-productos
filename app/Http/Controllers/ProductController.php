@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Product;
+use App\Image;
 
 use App\Http\Requests\ProductRequest;
 use Illuminate\Support\Facades\Storage; //para trabajos con los archivos dentro de storage
@@ -17,6 +18,7 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::latest()->get();
+
         return view('products.index', compact('products'));
     }
 
@@ -40,11 +42,26 @@ class ProductController extends Controller
     {
        // dd($request);
         $product = Product::create($request->all());
+       // $image = new Image(); //nuevo
 
        if ($request->file('file')) {
             $product->image = $request->file('file')->store('products', 'public');
             $product->save();
         }
+
+
+//nuevo
+        $image = Image::create([
+            'product_code' => $product->item_code,//Funciona para capturar el id del user actual
+            'src_img' => $request->file('file2')->store('images', 'public')
+
+        ]);
+
+       /* if ($request->file('file2')) {
+            $image->src_img = $request->file('file2')->store('images', 'public');
+
+            $image->save();
+        }*///nuevo
 
         return back()->with('status','Creado con exito');
     }
@@ -57,7 +74,8 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        return view ('products.show', compact('product'));
+        $images = Image::where('product_code','=',$product->item_code)->get();
+        return view ('products.show', compact('product','images'));
     }
 
     /**
@@ -89,6 +107,12 @@ class ProductController extends Controller
             $product->save();
         }
 
+             $image = Image::create([
+            'product_code' => $product->item_code,//Funciona para capturar el id del user actual
+            'src_img' => $request->file('file2')->store('images', 'public')
+
+        ]);
+
         return back()->with('status','Actualizado con exito');
     }
 
@@ -100,8 +124,15 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
+        $image = Image::where('product_code','=',$product->item_code)->get();
+
+       // dd($image);
+
         //eliminar imagen
+       /* Storage::disk('public')->delete($image->src_img);*/
         Storage::disk('public')->delete($product->image);
+
+        /*$image->delete(); */
         $product->delete();
 
         return back()->with('status','Producto eliminado');

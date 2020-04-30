@@ -20,7 +20,7 @@ class CreateImagesTable extends Migration
 
             $table->string('src_img');
 
-            $table->foreign('product_code')->references('item_code')->on('products');
+            $table->foreign('product_code')->references('item_code')->on('products')->onDelete('cascade');
 
             $table->timestamps();
         });

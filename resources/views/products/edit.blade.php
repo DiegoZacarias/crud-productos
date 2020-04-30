@@ -26,8 +26,13 @@
 
 
                 <div class="form-group">
-                  <label>Image</label>
+                  <label>Imagen</label>
                   <input type="file" name="file" >  
+                </div>
+
+                <div class="form-group">
+                  <label>Imagen secundaria</label>
+                  <input type="file" name="file2" >  
                 </div>
 
 

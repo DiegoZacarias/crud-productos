@@ -12,6 +12,15 @@
                         <br>
 
                     @endif
+                
+                <h4>Otras imagenes</h4>
+
+                    @foreach($images as $image)
+                        <img src="{{$image->get_image}}" class="card-img-top">
+                        <br>
+                    @endforeach
+
+
                 <div class="card-body">
                     <h5 class="card-title"> {{ $product->title }} </h5>
                     
