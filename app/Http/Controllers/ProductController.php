@@ -40,9 +40,10 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
-       // dd($request);
+       // dd($request->file2);
+     
         $product = Product::create($request->all());
-       // $image = new Image(); //nuevo
+      
 
        if ($request->file('file')) {
             $product->image = $request->file('file')->store('products', 'public');
@@ -51,17 +52,26 @@ class ProductController extends Controller
 
 
 //nuevo
-        $image = Image::create([
-            'product_code' => $product->item_code,//Funciona para capturar el id del user actual
+
+        $photos = $request->file('file2'); 
+        foreach($photos as $photo) { 
+                $image = Image::create([
+                'product_code' => $product->item_code,//Funciona para capturar el id del producto actual
+                'src_img' => $photo,
+
+                ]);
+            if ($photo) {  
+              $image->src_img  = $photo->store('images', 'public');
+              $image->save();
+            }
+        }
+
+   
+     /*   $image = Image::create([
+            'product_code' => $product->item_code,//Funciona para capturar el id del producto actual
             'src_img' => $request->file('file2')->store('images', 'public')
 
-        ]);
-
-       /* if ($request->file('file2')) {
-            $image->src_img = $request->file('file2')->store('images', 'public');
-
-            $image->save();
-        }*///nuevo
+        ]);*/
 
         return back()->with('status','Creado con exito');
     }
