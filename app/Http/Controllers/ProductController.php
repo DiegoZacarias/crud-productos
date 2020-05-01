@@ -15,9 +15,16 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
-        $products = Product::latest()->get();
+      //  $products = Product::latest()->get();
+        $products = Product::where('flag','=',1)->get();
 
         return view('products.index', compact('products'));
     }
@@ -51,7 +58,7 @@ class ProductController extends Controller
         }
 
 
-//nuevo
+        //Guardar las imagenes secundarias
 
         $photos = $request->file('file2'); 
         foreach($photos as $photo) { 
@@ -65,13 +72,6 @@ class ProductController extends Controller
               $image->save();
             }
         }
-
-   
-     /*   $image = Image::create([
-            'product_code' => $product->item_code,//Funciona para capturar el id del producto actual
-            'src_img' => $request->file('file2')->store('images', 'public')
-
-        ]);*/
 
         return back()->with('status','Creado con exito');
     }
@@ -117,11 +117,19 @@ class ProductController extends Controller
             $product->save();
         }
 
-             $image = Image::create([
-            'product_code' => $product->item_code,//Funciona para capturar el id del user actual
-            'src_img' => $request->file('file2')->store('images', 'public')
+        //Guardar las imagenes secundarias
+          $photos = $request->file('file2'); 
+        foreach($photos as $photo) { 
+                $image = Image::create([
+                'product_code' => $product->item_code,//Funciona para capturar el id del producto actual
+                'src_img' => $photo,
 
-        ]);
+                ]);
+            if ($photo) {  
+              $image->src_img  = $photo->store('images', 'public');
+              $image->save();
+            }
+        }
 
         return back()->with('status','Actualizado con exito');
     }
