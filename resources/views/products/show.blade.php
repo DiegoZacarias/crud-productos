@@ -1,34 +1,42 @@
 @extends('layouts.app')
 
 @section('content')
+
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">  
            
             <div class="card">
                      
+                   <div>
+                       <h4>Imagen principal del producto</h4>
+                    
                     @if($product->image)
                         <img src=" {{$product->get_image}} " class="card-img-top">
                         <br>
 
                     @endif
-                
-                <h4>Otras imagenes</h4>
+                </div> 
+
+                <div >
+                <h4>Imagenes secundarias</h4>
 
                     @foreach($images as $image)
                         <img src="{{$image->get_image}}" class="card-img-top">
                         <br>
                     @endforeach
-
+                </div> 
 
                 <div class="card-body">
-                    <h5 class="card-title"> {{ $product->title }} </h5>
+                    <h5 class="card-title"> <span style="font-weight: bold;">Titulo: </span> {{ $product->title }} </h5>
                     
 
                     <p class="card-text"> 
-                        {{$product->description}}
+                      <span style="font-weight: bold;">Descripcion: </span>  {{$product->description}}
                     </p>
                     <p class="card-text"> 
+                        <span style="font-weight: bold;">Especificaciones: </span>
                         @if( $product->specifications )
                             {{$product->specifications}}
                         @else
@@ -38,7 +46,9 @@
 
                     </p>
                     <p class="card-text"> 
+                            <span style="font-weight: bold;">Dimensiones: </span>
                         @if( $product->dimensions )
+
                         {{$product->dimensions}}
                         @else
                             No hay datos de dimensiones
@@ -60,7 +70,11 @@
 
                     <p class="card-text"> 
                         <span style="font-weight: bold;">Flag: </span>
-                       {{$product->flag}} 
+                      @if($product->flag = 1)
+                        true
+                        @else
+                        false
+                        @endif
 
                     </p>
 

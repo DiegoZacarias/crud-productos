@@ -20,7 +20,7 @@ $("#btn-agregar").click(function(){
     $("#imagenes").prepend(formulario);
 
     // Agregamos un boton para retirar el formulario
-    $("#imagenes .col-xs-4:first .well").append('<button class="btn-danger btn btn-block btn-retirar" type="button">Retirar</button>');
+    $("#imagenes .col-xs-4:first .well").append('<button class="btn-danger btn btn-sm btn-retirar" type="button">Retirar</button>');
 
     // Hacemos focus en el primer input del formulario
     $("#imagenes .col-xs-4:first .well input:first").focus();
@@ -71,10 +71,11 @@ $("#btn-agregar").click(function(){
                 </div>
 
                 
- <div id="imagenes" class="row">
+ <div class="form-group">
+       <div id="imagenes" class="row">
           <div id="copy">
             <div class="col-xs-4">
-              <div class="well well-sm">
+              <div class="well well-sm" style="margin-left: 15px;">
                   <label>Imagen secundaria</label>
                   <input type="file" name="file2[]" >  
               </div>
@@ -82,10 +83,11 @@ $("#btn-agregar").click(function(){
           </div>
         <div class="col-xs-4">
           <div class="well">
-            <button id="btn-agregar" class="btn btn-lg btn-block btn-default" type="button">Agregar</button>                
+            <button id="btn-agregar" class="btn btn-sm btn-success btn-default" type="button">Agregar otra imagen</button>                
           </div>
         </div>
       </div>
+</div>
 
 
                 <div class="form-group">

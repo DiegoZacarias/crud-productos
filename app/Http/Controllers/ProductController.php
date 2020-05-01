@@ -29,6 +29,14 @@ class ProductController extends Controller
         return view('products.index', compact('products'));
     }
 
+     public function index2()
+    {
+        $products = Product::latest()->get();
+        //$products = Product::where('flag','=',1)->get();
+
+        return view('products.index2', compact('products'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -119,18 +127,22 @@ class ProductController extends Controller
 
         //Guardar las imagenes secundarias
           $photos = $request->file('file2'); 
+          if($photos){
+
+
         foreach($photos as $photo) { 
                 $image = Image::create([
                 'product_code' => $product->item_code,//Funciona para capturar el id del producto actual
                 'src_img' => $photo,
 
                 ]);
-            if ($photo) {  
+            if ($photo) { 
+            //Storage::disk('public')->delete($image->src_img); 
               $image->src_img  = $photo->store('images', 'public');
               $image->save();
             }
         }
-
+}
         return back()->with('status','Actualizado con exito');
     }
 
@@ -146,11 +158,8 @@ class ProductController extends Controller
 
        // dd($image);
 
-        //eliminar imagen
-       /* Storage::disk('public')->delete($image->src_img);*/
         Storage::disk('public')->delete($product->image);
 
-        /*$image->delete(); */
         $product->delete();
 
         return back()->with('status','Producto eliminado');

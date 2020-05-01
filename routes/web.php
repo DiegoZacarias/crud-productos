@@ -22,3 +22,5 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('products','ProductController');
+
+Route::get('/allproducts', 'ProductController@index2')->name('flag'); //ruta para mostrar todos los productos agregados a la base de datos
