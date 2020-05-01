@@ -90,7 +90,8 @@
 
                     <br>
                 </div>
-                <p>Por favor iniciar sesion para entrar al crud</p>
+                <p>Si es la primera vez que inicias el sistema, no olvides hacer:<span style="font-weight: bold;"> php artisan migrate:refresh --seed </span></p>
+                <p>Por favor iniciar sesion para entrar al CRUD</p>
                   <p><span style="font-weight: bold;">Email: </span>admin@admin.com</p>
                    <p><span style="font-weight: bold;">Contraseña: </span>1234</p>
 
